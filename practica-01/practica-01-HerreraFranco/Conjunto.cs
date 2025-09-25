@@ -6,24 +6,28 @@ using System.Threading.Tasks;
 
 namespace practica_01_HerreraFranco
 {
-    public class Cola : IColeccionable, IIterable
+    public class Conjunto : IColeccionable, IIterable
     {
         private List<IComparable> elementos;
 
-        public Cola()
+        public Conjunto()
         {
             this.elementos = new List<IComparable>();
         }
+
         public void agregar(IComparable c)
         {
-            this.elementos.Add(c);
+            if (!this.contiene(c))
+            {
+                this.elementos.Add(c);
+            }
         }
 
         public bool contiene(IComparable c)
         {
-            foreach (IComparable elem in this.elementos)
+            foreach (IComparable elemento in this.elementos)
             {
-                if (elem.sosIgual(c))
+                if (elemento.sosIgual(c))
                 {
                     return true;
                 }
@@ -36,29 +40,11 @@ namespace practica_01_HerreraFranco
             return this.elementos.Count;
         }
 
-        public IComparable maximo()
-        {
-            if (this.elementos.Count == 0)
-            {
-                throw new InvalidOperationException("La colección está vacía.");
-            }
-
-            IComparable max = this.elementos[0];
-            foreach (IComparable elem in this.elementos)
-            {
-                if (elem.sosMayor(max))
-                {
-                    max = elem;
-                }
-            }
-            return max;
-        }
-
         public IComparable minimo()
         {
             if (this.elementos.Count == 0)
             {
-                throw new InvalidOperationException("La colección está vacía.");
+                return null;
             }
 
             IComparable min = this.elementos[0];
@@ -72,17 +58,34 @@ namespace practica_01_HerreraFranco
             return min;
         }
 
-        public IIterador crearIterador()
+        public IComparable maximo()
         {
-            return new IteradorDeCola(this.elementos);
+            if (this.elementos.Count == 0)
+            {
+                return null;
+            }
+            IComparable max = this.elementos[0];
+            foreach (IComparable elem in this.elementos)
+            {
+                if (elem.sosMayor(max))
+                {
+                    max = elem;
+                }
+            }
+            return max;
         }
 
-        private class IteradorDeCola : IIterador
+        public IIterador crearIterador()
+        {
+            return new IteradorDeConjunto(this.elementos);
+        }
+
+        private class IteradorDeConjunto : IIterador
         {
             private List<IComparable> elementos;
             private int indice;
 
-            public IteradorDeCola(List<IComparable> elementos)
+            public IteradorDeConjunto(List<IComparable> elementos)
             {
                 this.elementos = elementos;
                 this.primero();

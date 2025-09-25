@@ -54,19 +54,6 @@ class Program
         {
             Console.WriteLine("Elemento mínimo: " + c.minimo().ToString());
             Console.WriteLine("Elemento máximo: " + c.maximo().ToString());
-
-            Console.Write("Ingrese un DNI para buscar: ");
-            int dniBuscado = int.Parse(Console.ReadLine());
-            Persona personaParaBuscar = new Alumno("aux", dniBuscado, 0, 0);
-
-            if (c.contiene(personaParaBuscar))
-            {
-                Console.WriteLine("El DNI " + dniBuscado + " SÍ está en la colección.");
-            }
-            else
-            {
-                Console.WriteLine("El DNI " + dniBuscado + " NO está en la colección.");
-            }
         }
         else
         {
@@ -90,6 +77,28 @@ class Program
 
             Alumno a = new Alumno(nombreRnd, dniRnd, legajoRnd, promedioRnd);
             c.agregar(a);
+        }
+    }
+
+    public static void imprimirElementos(IIterable coleccion)
+    {
+        IIterador iterador = coleccion.crearIterador();
+        while (!iterador.fin())
+        {
+            Console.WriteLine(iterador.actual().ToString());
+            iterador.siguiente();
+        }
+    }
+
+    public static void cambiarEstrategia(IIterable coleccion, IEstrategiaDeComparacion estrategia)
+    {
+        IIterador iterador = coleccion.crearIterador();
+
+        while (!iterador.fin())
+        {
+            Alumno alumnoActual = (Alumno)iterador.actual();
+            alumnoActual.setEstrategia(estrategia);
+            iterador.siguiente();
         }
     }
 
@@ -126,15 +135,62 @@ class Program
         //informar(multiple);
 
         //EJERCICIO 14
+        //Pila pila = new Pila();
+        //Cola cola = new Cola();
+
+        //llenarAlumnos(pila);
+        //llenarAlumnos(cola);
+
+        //ColeccionMultiple multiple = new ColeccionMultiple(pila, cola);
+
+        //Console.WriteLine("Informacion de la Colección Múltiple de Alumnos");
+        //informarAlumnos(multiple);
+
+        //PRACTICA 02 - EJERCICIO 7
+        //IIterable pila = new Pila();
+        //IIterable cola = new Cola();
+        //IIterable conjunto = new Conjunto();
+
+        //llenarAlumnos(pila as IColeccionable);
+        //llenarAlumnos(cola as IColeccionable);
+        //llenarAlumnos(conjunto as IColeccionable);
+
+        //Console.WriteLine("Elementos en la Pila:");
+        //imprimirElementos(pila);
+
+        //Console.WriteLine("Elementos en la Cola:");
+        //imprimirElementos(cola);
+
+        //Console.WriteLine("Elementos en el Conjunto:");
+        //imprimirElementos(conjunto);
+
+        //PRACTICA 02 - EJERCICIO 9
         Pila pila = new Pila();
-        Cola cola = new Cola();
-
         llenarAlumnos(pila);
-        llenarAlumnos(cola);
 
-        ColeccionMultiple multiple = new ColeccionMultiple(pila, cola);
+        Console.WriteLine("Elementos en la Pila (INFORME INICIAL) (Estrategia por DNI):");
+        informarAlumnos(pila);
 
-        Console.WriteLine("Informacion de la Colección Múltiple de Alumnos");
-        informarAlumnos(multiple);
+        IEstrategiaDeComparacion estrategiaNombre = new EstrategiaPorNombre();
+
+        cambiarEstrategia(pila, estrategiaNombre);
+
+        Console.WriteLine("Elementos en la Pila (INFORME 2) (Estrategia por Nombre):");
+        informarAlumnos(pila);
+
+        IEstrategiaDeComparacion estrategiaPromedio = new EstrategiaPorPromedio();
+        cambiarEstrategia(pila, estrategiaPromedio);
+
+        Console.WriteLine("Elementos en la Pila (INFORME 3) (Estrategia por Promedio):");
+        informarAlumnos(pila);
+
+        //RESPUESTA PREGUNTA PUNTO 10
+        // No tuve que hacer nada. Ya que 'imprimirElementos' trabaja con la interfaz IIterable,
+        // y todos los elementos (Pila, Cola, Conjunto) implementan esa interfaz, por lo que 
+        // la funcion la aceptó sin necesidad de cambios.
+
+        // RESPUESTA PREGUNTA PUNTO 11
+        // Podría crearse un nuevo iterador que devuelva unicamente los alumnos que cumplan con
+        // esa conficion.
     }
 }
