@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace practica_01_HerreraFranco
+﻿namespace practica_01_HerreraFranco
 {
-    public class Alumno : Persona
+    public class Alumno : Persona, IObservador
     {
         private int legajo;
         private double promedio;
@@ -52,6 +46,39 @@ namespace practica_01_HerreraFranco
         public override string ToString()
         {
             return $"{this.nombre} (DNI: {this.dni}, Promedio: {this.promedio}, Legajo: {this.legajo})";
+        }
+
+        public void prestarAtencion()
+        {
+            Console.WriteLine($"{this.nombre} está prestando atención.");
+        }
+
+        public void distraerse()
+        {
+            Console.WriteLine($"{this.nombre} se está distrayendo.");
+        }
+
+        public void actualizar(IObservado observado)
+        {
+            string accionDelProfesor = ((Profesor)observado).getMensaje();
+            if (accionDelProfesor == "hablando...")
+            {
+                this.prestarAtencion();
+            }
+            else if (accionDelProfesor == "escribiendo...")
+            {
+                this.distraerse();
+            }
+        }
+
+        public void prestarAtencion(Profesor profesor)
+        {
+            Console.WriteLine($"{this.nombre} está prestando atención a {profesor.ToString()}.");
+        }
+
+        public void distraerse(Profesor profesor)
+        {
+            Console.WriteLine($"{this.nombre} se está distrayendo mientras {profesor.ToString()} escribe en el pizarrón.");
         }
     }
 }

@@ -1,59 +1,39 @@
 ﻿using System;
 using practica_01_HerreraFranco;
+using IComparable = practica_01_HerreraFranco.IComparable;
 
 class Program
 {
-    public static void llenar(IColeccionable c)
+    public static void llenar(IColeccionable coleccion, FabricaDeComparables fabrica)
     {
-        Random rnd = new Random();
         for (int i = 0; i < 20; i++)
         {
-            Numero n = new Numero(rnd.Next(1, 101));
-            c.agregar(n);
+            IComparable nuevoElemento = fabrica.crearAleatorio();
+            coleccion.agregar(nuevoElemento);
         }
     }
 
-    //INFORMAR CON NUMEROS
-    public static void informar(IColeccionable c)
+    public static void informar(IColeccionable coleccion, FabricaDeComparables fabrica)
     {
         Console.WriteLine("-----------------------------------");
-        Console.WriteLine("Cantidad de elementos: " + c.cuantos());
+        Console.WriteLine("Cantidad de elementos: " + coleccion.cuantos());
 
-        if (c.cuantos() > 0)
+        if (coleccion.cuantos() > 0)
         {
-            Console.WriteLine("Elemento minimo: " + ((Numero)c.minimo()).getValor());
-            Console.WriteLine("Elemento maximo: " + ((Numero)c.maximo()).getValor());
+            Console.WriteLine("Elemento mínimo: " + coleccion.minimo().ToString());
+            Console.WriteLine("Elemento máximo: " + coleccion.maximo().ToString());
 
-            Console.Write("Ingrese un numero para buscar: ");
-            int valorBuscado = int.Parse(Console.ReadLine());
-            Numero numeroABuscar = new Numero(valorBuscado);
+            Console.WriteLine("\n--- Búsqueda de un elemento ---");
+            IComparable elementoBuscado = fabrica.crearPorTeclado();
 
-            if (c.contiene(numeroABuscar))
+            if (coleccion.contiene(elementoBuscado))
             {
-                Console.WriteLine("El elemento " + valorBuscado + " Si esta en la coleccion.");
+                Console.WriteLine("El elemento SÍ está en la colección.");
             }
             else
             {
-                Console.WriteLine("El elemento " + valorBuscado + " NO esta en la coleccion.");
+                Console.WriteLine("El elemento NO está en la colección.");
             }
-        }
-        else
-        {
-            Console.WriteLine("La coleccion esta vacia.");
-        }
-        Console.WriteLine("-----------------------------------");
-    }
-
-    //INFORMAR CON ALUMNOS
-    public static void informarAlumnos(IColeccionable c)
-    {
-        Console.WriteLine("-----------------------------------");
-        Console.WriteLine("Cantidad de elementos: " + c.cuantos());
-
-        if (c.cuantos() > 0)
-        {
-            Console.WriteLine("Elemento mínimo: " + c.minimo().ToString());
-            Console.WriteLine("Elemento máximo: " + c.maximo().ToString());
         }
         else
         {
@@ -62,135 +42,66 @@ class Program
         Console.WriteLine("-----------------------------------");
     }
 
-    public static void llenarAlumnos(IColeccionable c)
+    public static void dictadoDeClases(Profesor profe)
     {
-        Random rnd = new Random();
-        string[] nombres = { "Ana", "Luis", "Carlos", "Marta", "Sofia", "Jorge", "Lucia", "Pedro", "Elena", "Diego" };
-        string[] apellidos = { "Gomez", "Perez", "Rodriguez", "Lopez", "Garcia", "Martinez", "Sanchez", "Ramirez", "Torres", "Flores" };
-
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 5; i++)
         {
-            string nombreRnd = nombres[rnd.Next(nombres.Length)] + " " + apellidos[rnd.Next(apellidos.Length)];
-            int dniRnd = rnd.Next(20000000, 40000000);
-            int legajoRnd = rnd.Next(1000, 9999);
-            double promedioRnd = Math.Round(rnd.NextDouble() * 10, 2);
-
-            Alumno a = new Alumno(nombreRnd, dniRnd, legajoRnd, promedioRnd);
-            c.agregar(a);
-        }
-    }
-
-    public static void imprimirElementos(IIterable coleccion)
-    {
-        IIterador iterador = coleccion.crearIterador();
-        while (!iterador.fin())
-        {
-            Console.WriteLine(iterador.actual().ToString());
-            iterador.siguiente();
-        }
-    }
-
-    public static void cambiarEstrategia(IIterable coleccion, IEstrategiaDeComparacion estrategia)
-    {
-        IIterador iterador = coleccion.crearIterador();
-
-        while (!iterador.fin())
-        {
-            Alumno alumnoActual = (Alumno)iterador.actual();
-            alumnoActual.setEstrategia(estrategia);
-            iterador.siguiente();
+            profe.hablarALaClase();
+            profe.escribirEnElPizzarron();
         }
     }
 
     static void Main(string[] args)
     {
-        //EJERCICIO 7
+        // PRUEBAS ANTERIORES 
+        //FabricaDeComparables fabricaAlumnos = new FabricaDeAlumnos();
+        //FabricaDeComparables fabricaNumeros = new FabricaDeNumeros();
+        //FabricaDeComparables fabricaProfesores = new FabricaDeProfesor();
+
         //IColeccionable pila = new Pila();
-        //IColeccionable cola = new Cola();
 
-        //llenar(pila);
-        //llenar(cola);
+        //// --- Prueba con Alumnos ---
+        //IColeccionable coleccionAlumnos = new Pila();
+        //Console.WriteLine("***** Llenando la Pila con Alumnos... *****");
+        //llenar(coleccionAlumnos, fabricaAlumnos);
 
-        //Console.WriteLine("Informacion de la Pila");
-        //informar(pila);
+        //Console.WriteLine("\n***** Informando la Pila de Alumnos *****");
+        //informar(coleccionAlumnos, fabricaAlumnos);
 
-        //Console.WriteLine("Informacion de la Cola");
-        //informar(cola);
+        //// --- Prueba con Números ---
+        //IColeccionable coleccionNumeros = new Pila();
+        //Console.WriteLine("\n***** Llenando la Pila con Números... *****");
+        //llenar(coleccionNumeros, fabricaNumeros);
 
-        //EJERCICIO 9
-        //Pila pila = new Pila();
-        //Cola cola = new Cola();
+        //Console.WriteLine("\n***** Informando la Pila de Números *****");
+        //informar(coleccionNumeros, fabricaNumeros);
 
-        //llenar(pila);
-        //llenar(cola);
+        //// --- Prueba con Profesores ---
+        //IColeccionable coleccionProfesores = new Pila();
+        //Console.WriteLine("\n***** Llenando la Pila con Profesores... *****");
+        //llenar(coleccionProfesores, fabricaProfesores);
 
-        //ColeccionMultiple multiple = new ColeccionMultiple(pila, cola);
+        //Console.WriteLine("\n***** Informando la Pila de Profesores *****");
+        //informar(coleccionProfesores, fabricaProfesores);
 
-        //Console.WriteLine("Informacinon de la Pila");
-        //informar(pila);
-        //Console.WriteLine("Informacion de la Cola");
-        //informar(cola);
+        // PRUEBA PATRÓN OBSERVER
+        Profesor profesor = new Profesor("Dr. Turing", 123456, 20);
 
-        //Console.WriteLine("Informacion de la Coleccion Multiple");
-        //informar(multiple);
+        List<IObservador> alumnos = new List<IObservador>();
+        FabricaDeComparables fabricaAlumnos = new FabricaDeAlumnos();
 
-        //EJERCICIO 14
-        //Pila pila = new Pila();
-        //Cola cola = new Cola();
+        Console.WriteLine("Creando y suscribiendo alumnos a la clase...");
+        for (int i = 0; i < 5; i++)
+        {
+            Alumno nuevoAlumno = (Alumno)fabricaAlumnos.crearAleatorio();
+            alumnos.Add(nuevoAlumno);
+        }
 
-        //llenarAlumnos(pila);
-        //llenarAlumnos(cola);
+        foreach (IObservador alumno in alumnos)
+        {
+            profesor.agregarObservador(alumno);
+        }
 
-        //ColeccionMultiple multiple = new ColeccionMultiple(pila, cola);
-
-        //Console.WriteLine("Informacion de la Colección Múltiple de Alumnos");
-        //informarAlumnos(multiple);
-
-        //PRACTICA 02 - EJERCICIO 7
-        //IIterable pila = new Pila();
-        //IIterable cola = new Cola();
-        //IIterable conjunto = new Conjunto();
-
-        //llenarAlumnos(pila as IColeccionable);
-        //llenarAlumnos(cola as IColeccionable);
-        //llenarAlumnos(conjunto as IColeccionable);
-
-        //Console.WriteLine("Elementos en la Pila:");
-        //imprimirElementos(pila);
-
-        //Console.WriteLine("Elementos en la Cola:");
-        //imprimirElementos(cola);
-
-        //Console.WriteLine("Elementos en el Conjunto:");
-        //imprimirElementos(conjunto);
-
-        //PRACTICA 02 - EJERCICIO 9
-        Pila pila = new Pila();
-        llenarAlumnos(pila);
-
-        Console.WriteLine("Elementos en la Pila (INFORME INICIAL) (Estrategia por DNI):");
-        informarAlumnos(pila);
-
-        IEstrategiaDeComparacion estrategiaNombre = new EstrategiaPorNombre();
-
-        cambiarEstrategia(pila, estrategiaNombre);
-
-        Console.WriteLine("Elementos en la Pila (INFORME 2) (Estrategia por Nombre):");
-        informarAlumnos(pila);
-
-        IEstrategiaDeComparacion estrategiaPromedio = new EstrategiaPorPromedio();
-        cambiarEstrategia(pila, estrategiaPromedio);
-
-        Console.WriteLine("Elementos en la Pila (INFORME 3) (Estrategia por Promedio):");
-        informarAlumnos(pila);
-
-        //RESPUESTA PREGUNTA PUNTO 10
-        // No tuve que hacer nada. Ya que 'imprimirElementos' trabaja con la interfaz IIterable,
-        // y todos los elementos (Pila, Cola, Conjunto) implementan esa interfaz, por lo que 
-        // la funcion la aceptó sin necesidad de cambios.
-
-        // RESPUESTA PREGUNTA PUNTO 11
-        // Podría crearse un nuevo iterador que devuelva unicamente los alumnos que cumplan con
-        // esa conficion.
+        dictadoDeClases(profesor);
     }
 }

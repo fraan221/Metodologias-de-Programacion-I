@@ -34,5 +34,10 @@ namespace practica_01_HerreraFranco
         {
             return this.valor > ((Numero)c).getValor();
         }
+
+        public override string ToString()
+        {
+            return this.valor.ToString();
+        }
     }
 }
