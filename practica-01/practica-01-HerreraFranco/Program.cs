@@ -53,55 +53,33 @@ class Program
 
     static void Main(string[] args)
     {
-        // PRUEBAS ANTERIORES 
-        //FabricaDeComparables fabricaAlumnos = new FabricaDeAlumnos();
-        //FabricaDeComparables fabricaNumeros = new FabricaDeNumeros();
-        //FabricaDeComparables fabricaProfesores = new FabricaDeProfesor();
+        Teacher teacher = new Teacher();
+        FabricaDeAlumnos fabricaAlumnos = new FabricaDeAlumnos();
 
-        //IColeccionable pila = new Pila();
-
-        //// --- Prueba con Alumnos ---
-        //IColeccionable coleccionAlumnos = new Pila();
-        //Console.WriteLine("***** Llenando la Pila con Alumnos... *****");
-        //llenar(coleccionAlumnos, fabricaAlumnos);
-
-        //Console.WriteLine("\n***** Informando la Pila de Alumnos *****");
-        //informar(coleccionAlumnos, fabricaAlumnos);
-
-        //// --- Prueba con Números ---
-        //IColeccionable coleccionNumeros = new Pila();
-        //Console.WriteLine("\n***** Llenando la Pila con Números... *****");
-        //llenar(coleccionNumeros, fabricaNumeros);
-
-        //Console.WriteLine("\n***** Informando la Pila de Números *****");
-        //informar(coleccionNumeros, fabricaNumeros);
-
-        //// --- Prueba con Profesores ---
-        //IColeccionable coleccionProfesores = new Pila();
-        //Console.WriteLine("\n***** Llenando la Pila con Profesores... *****");
-        //llenar(coleccionProfesores, fabricaProfesores);
-
-        //Console.WriteLine("\n***** Informando la Pila de Profesores *****");
-        //informar(coleccionProfesores, fabricaProfesores);
-
-        // PRUEBA PATRÓN OBSERVER
-        Profesor profesor = new Profesor("Dr. Turing", 123456, 20);
-
-        List<IObservador> alumnos = new List<IObservador>();
-        FabricaDeComparables fabricaAlumnos = new FabricaDeAlumnos();
-
-        Console.WriteLine("Creando y suscribiendo alumnos a la clase...");
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
-            Alumno nuevoAlumno = (Alumno)fabricaAlumnos.crearAleatorio();
-            alumnos.Add(nuevoAlumno);
+            Alumno alumno = (Alumno)fabricaAlumnos.crearAleatorio();
+            Student student_adaptado = new AlumnoAdapter(alumno);
+            Student student_decorado = new DecoradorLegajo(student_adaptado);
+            student_decorado = new DecoradorNotaLetras(student_decorado);
+            student_decorado = new DecoradorAprobacion(student_decorado);
+            student_decorado = new DecoradorRecuadro(student_decorado);
+            teacher.goToClass(student_decorado);
         }
 
-        foreach (IObservador alumno in alumnos)
+        for (int i = 0; i < 10; i++)
         {
-            profesor.agregarObservador(alumno);
+            AlumnoMuyEstudioso alumnoEstudioso = new AlumnoMuyEstudioso("Estudioso " + i, 40000000 + i, 10000 + i, 9.5);
+            Student student_adaptado = new AlumnoAdapter(alumnoEstudioso);
+            Student student_decorado = new DecoradorLegajo(student_adaptado);
+            student_decorado = new DecoradorNotaLetras(student_decorado);
+            student_decorado = new DecoradorAprobacion(student_decorado);
+            student_decorado = new DecoradorRecuadro(student_decorado);
+            teacher.goToClass(student_decorado);
         }
 
-        dictadoDeClases(profesor);
+        teacher.teachingAClass();
+
+        Console.ReadKey(true);
     }
 }

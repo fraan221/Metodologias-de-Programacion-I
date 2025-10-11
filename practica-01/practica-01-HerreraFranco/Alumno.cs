@@ -4,12 +4,15 @@
     {
         private int legajo;
         private double promedio;
+        private int calificacion;
         private IEstrategiaDeComparacion estrategia;
+        private static Random random = new Random();
 
         public Alumno(string n, int d, int l, double p) : base(n, d)
         {
             this.legajo = l;
             this.promedio = p;
+            this.calificacion = 0;
             this.estrategia = new EstrategiaPorDNI();
         }
 
@@ -21,6 +24,26 @@
         public double getPromedio()
         {
             return this.promedio;
+        }
+
+        public int getCalificacion()
+        {
+            return this.calificacion;
+        }
+
+        public void setCalificacion(int calif)
+        {
+            this.calificacion = calif;
+        }
+
+        public virtual int responderPregunta(int pregunta)
+        {
+            return random.Next(1, 4);
+        }
+
+        public string mostrarCalificacion()
+        {
+            return $"{this.nombre} (Legajo: {this.legajo}) - Calificación: {this.calificacion}";
         }
 
         public void setEstrategia(IEstrategiaDeComparacion e)
