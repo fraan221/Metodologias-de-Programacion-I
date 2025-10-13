@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace practica_01_HerreraFranco
+﻿namespace practica_01_HerreraFranco
 {
-    public class DecoradorRecuadro : AdicionalDecorator
+    public class DecoradorRecuadro : AlumnoDecorator
     {
-        public DecoradorRecuadro(Student s) : base(s) { }
+        public DecoradorRecuadro(Alumno a) : base(a) { }
 
-        public override string showResult()
+        public override string mostrarCalificacion()
         {
-            string resultadoInterno = base.showResult();
+            string resultadoInterno = base.mostrarCalificacion();
             string linea = new string('*', resultadoInterno.Length + 4);
             return $"{linea}\n* {resultadoInterno} *\n{linea}";
         }

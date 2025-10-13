@@ -16,22 +16,22 @@
             this.estrategia = new EstrategiaPorDNI();
         }
 
-        public int getLegajo()
+        public virtual int getLegajo()
         {
             return this.legajo;
         }
 
-        public double getPromedio()
+        public virtual double getPromedio()
         {
             return this.promedio;
         }
 
-        public int getCalificacion()
+        public virtual int getCalificacion()
         {
             return this.calificacion;
         }
 
-        public void setCalificacion(int calif)
+        public virtual void setCalificacion(int calif)
         {
             this.calificacion = calif;
         }
@@ -41,7 +41,7 @@
             return random.Next(1, 4);
         }
 
-        public string mostrarCalificacion()
+        public virtual string mostrarCalificacion()
         {
             return $"{this.nombre} (Legajo: {this.legajo}) - Calificación: {this.calificacion}";
         }

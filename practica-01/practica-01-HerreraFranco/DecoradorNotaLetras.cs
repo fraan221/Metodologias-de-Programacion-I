@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace practica_01_HerreraFranco
+﻿namespace practica_01_HerreraFranco
 {
-    public class DecoradorNotaLetras : AdicionalDecorator
+    public class DecoradorNotaLetras : AlumnoDecorator
     {
-        public DecoradorNotaLetras(Student s) : base(s) { }
+        public DecoradorNotaLetras(Alumno a) : base(a) { }
 
         private string calificacionEnLetras(int calificacion)
         {
@@ -29,10 +23,9 @@ namespace practica_01_HerreraFranco
             }
         }
 
-        public override string showResult()
+        public override string mostrarCalificacion()
         {
-            int calificacion = this.getAlumnoComponente().getCalificacion();
-            return $"{base.showResult()} ({calificacionEnLetras(calificacion)})";
+            return $"{base.mostrarCalificacion()} ({this.calificacionEnLetras(this.alumno_adicional.getCalificacion())})";
         }
     }
 }

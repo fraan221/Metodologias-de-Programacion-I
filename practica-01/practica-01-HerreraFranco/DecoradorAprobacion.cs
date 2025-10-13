@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace practica_01_HerreraFranco
+﻿namespace practica_01_HerreraFranco
 {
-    public class DecoradorAprobacion : AdicionalDecorator
+    public class DecoradorAprobacion : AlumnoDecorator
     {
-        public DecoradorAprobacion(Student s) : base(s) { }
+        public DecoradorAprobacion(Alumno a) : base(a) { }
 
-        public override string showResult()
+        public override string mostrarCalificacion()
         {
-            int calificacion = this.getAlumnoComponente().getCalificacion();
+            int calificacion = this.alumno_adicional.getCalificacion();
             string estado = "";
 
             if (calificacion >= 7)
@@ -28,7 +22,7 @@ namespace practica_01_HerreraFranco
                 estado = "DESAPROBADO";
             }
 
-            return $"{base.showResult()} - {estado}";
+            return $"{base.mostrarCalificacion()} - {estado}";
         }
     }
 }

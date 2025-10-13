@@ -58,24 +58,24 @@ class Program
 
         for (int i = 0; i < 10; i++)
         {
-            Alumno alumno = (Alumno)fabricaAlumnos.crearAleatorio();
-            Student student_adaptado = new AlumnoAdapter(alumno);
-            Student student_decorado = new DecoradorLegajo(student_adaptado);
-            student_decorado = new DecoradorNotaLetras(student_decorado);
-            student_decorado = new DecoradorAprobacion(student_decorado);
-            student_decorado = new DecoradorRecuadro(student_decorado);
-            teacher.goToClass(student_decorado);
+            Alumno alumno_base = (Alumno)fabricaAlumnos.crearAleatorio();
+            Alumno alumno_decorado = new DecoradorLegajo(alumno_base);
+            alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
+            alumno_decorado = new DecoradorAprobacion(alumno_decorado);
+            alumno_decorado = new DecoradorRecuadro(alumno_decorado);
+            Student student_final = new AlumnoAdapter(alumno_decorado);
+            teacher.goToClass(student_final);
         }
 
         for (int i = 0; i < 10; i++)
         {
-            AlumnoMuyEstudioso alumnoEstudioso = new AlumnoMuyEstudioso("Estudioso " + i, 40000000 + i, 10000 + i, 9.5);
-            Student student_adaptado = new AlumnoAdapter(alumnoEstudioso);
-            Student student_decorado = new DecoradorLegajo(student_adaptado);
-            student_decorado = new DecoradorNotaLetras(student_decorado);
-            student_decorado = new DecoradorAprobacion(student_decorado);
-            student_decorado = new DecoradorRecuadro(student_decorado);
-            teacher.goToClass(student_decorado);
+            AlumnoMuyEstudioso alumnoEstudioso_base = new AlumnoMuyEstudioso("Estudioso " + i, 40000000 + i, 10000 + i, 9.5);
+            Alumno alumno_decorado = new DecoradorLegajo(alumnoEstudioso_base);
+            alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
+            alumno_decorado = new DecoradorAprobacion(alumno_decorado);
+            alumno_decorado = new DecoradorRecuadro(alumno_decorado);
+            Student student_final = new AlumnoAdapter(alumno_decorado);
+            teacher.goToClass(student_final);
         }
 
         teacher.teachingAClass();

@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace practica_01_HerreraFranco
+﻿namespace practica_01_HerreraFranco
 {
-    public class DecoradorLegajo : AdicionalDecorator
+    public class DecoradorLegajo : AlumnoDecorator
     {
-        public DecoradorLegajo(Student s) : base(s) { }
+        public DecoradorLegajo(Alumno a) : base(a) { }
 
-        public override string showResult()
+        public override string mostrarCalificacion()
         {
-            Alumno alumno = this.getAlumnoComponente();
-            return $"{alumno.getNombre()} ({alumno.getLegajo()}) {alumno.getCalificacion()}";
+            return $"{base.mostrarCalificacion()} ({this.alumno_adicional.getLegajo()})";
         }
     }
 }
