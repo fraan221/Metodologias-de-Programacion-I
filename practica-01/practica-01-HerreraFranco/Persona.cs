@@ -17,12 +17,12 @@ namespace practica_01_HerreraFranco
             this.dni = d;
         }
 
-        public string getNombre()
+        public virtual string getNombre()
         {
             return this.nombre;
         }
 
-        public int getDni()
+        public virtual int getDni()
         {
             return this.dni;
         }

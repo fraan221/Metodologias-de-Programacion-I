@@ -53,12 +53,13 @@ class Program
 
     static void Main(string[] args)
     {
+        // EJERCICIO 2   
         Teacher teacher = new Teacher();
-        FabricaDeAlumnos fabricaAlumnos = new FabricaDeAlumnos();
+        GeneradorDeDatosAleatorios generador = new GeneradorDeDatosAleatorios();
 
         for (int i = 0; i < 10; i++)
         {
-            Alumno alumno_base = (Alumno)fabricaAlumnos.crearAleatorio();
+            Alumno alumno_base = new AlumnoProxy(generador.stringAleatorio(8), generador.numeroAleatorio(50000000), generador.numeroAleatorio(10000), generador.numeroAleatorio(10), false);
             Alumno alumno_decorado = new DecoradorLegajo(alumno_base);
             alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
             alumno_decorado = new DecoradorAprobacion(alumno_decorado);
@@ -69,8 +70,8 @@ class Program
 
         for (int i = 0; i < 10; i++)
         {
-            AlumnoMuyEstudioso alumnoEstudioso_base = new AlumnoMuyEstudioso("Estudioso " + i, 40000000 + i, 10000 + i, 9.5);
-            Alumno alumno_decorado = new DecoradorLegajo(alumnoEstudioso_base);
+            Alumno alumno_base = new AlumnoProxy("Estudioso " + i, 40000000 + i, 10000 + i, 9.5, true);
+            Alumno alumno_decorado = new DecoradorLegajo(alumno_base);
             alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
             alumno_decorado = new DecoradorAprobacion(alumno_decorado);
             alumno_decorado = new DecoradorRecuadro(alumno_decorado);
