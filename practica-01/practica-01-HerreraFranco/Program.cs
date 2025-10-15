@@ -93,8 +93,8 @@ class Program
         pila.setOrdenLlegaAlumno(ordenLlegaAlumno);
         pila.setOrdenAulaLlena(ordenAulaLlena);
 
-        FabricaDeAlumnos fabricaAlumnos = new FabricaDeAlumnos();
-        FabricaDeAlumnosEstudiosos fabricaEstudiosos = new FabricaDeAlumnosEstudiosos();
+        FabricaDeComparables fabricaAlumnos = FabricaDeComparables.crearFabrica(FabricaDeComparables.ALUMNOS);
+        FabricaDeComparables fabricaEstudiosos = FabricaDeComparables.crearFabrica(FabricaDeComparables.ALUMNOS_ESTUDIOSOS);
 
         llenar(pila, fabricaAlumnos);
         llenar(pila, fabricaEstudiosos);
