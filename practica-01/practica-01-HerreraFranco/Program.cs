@@ -85,10 +85,10 @@ class Program
         //informar(coleccionProfesores, fabricaProfesores);
 
         // PRUEBA PATRÓN OBSERVER
-        Profesor profesor = new Profesor("Dr. Turing", 123456, 20);
-
+        Profesor profesor = new Profesor("Dr. Pepito", 123456, 20);
         List<IObservador> alumnos = new List<IObservador>();
-        FabricaDeComparables fabricaAlumnos = new FabricaDeAlumnos();
+
+        FabricaDeComparables fabricaAlumnos = FabricaDeComparables.crearFabrica(FabricaDeComparables.ALUMNOS);
 
         Console.WriteLine("Creando y suscribiendo alumnos a la clase...");
         for (int i = 0; i < 5; i++)
