@@ -1,22 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace practica_01_HerreraFranco
 {
-    public class Cola : IColeccionable, IIterable
+    public class Cola : IColeccionable, IIterable, Ordenable
     {
         private List<IComparable> elementos;
+        private OrdenEnAula1 ordenInicio;
+        private OrdenEnAula2 ordenLlegaAlumno;
+        private OrdenEnAula1 ordenAulaLlena;
 
         public Cola()
         {
             this.elementos = new List<IComparable>();
+            this.ordenInicio = null;
+            this.ordenLlegaAlumno = null;
+            this.ordenAulaLlena = null;
         }
+
+        public void setOrdenInicio(OrdenEnAula1 orden)
+        {
+            this.ordenInicio = orden;
+        }
+
+        public void setOrdenLlegaAlumno(OrdenEnAula2 orden)
+        {
+            this.ordenLlegaAlumno = orden;
+        }
+
+        public void setOrdenAulaLlena(OrdenEnAula1 orden)
+        {
+            this.ordenAulaLlena = orden;
+        }
+
         public void agregar(IComparable c)
         {
+            if (this.cuantos() == 0 && this.ordenInicio != null)
+            {
+                this.ordenInicio.ejecutar();
+            }
+
             this.elementos.Add(c);
+
+            if (this.ordenLlegaAlumno != null)
+            {
+                this.ordenLlegaAlumno.ejecutar(c);
+            }
+
+            if (this.cuantos() == 40 && this.ordenAulaLlena != null)
+            {
+                this.ordenAulaLlena.ejecutar();
+            }
         }
 
         public bool contiene(IComparable c)

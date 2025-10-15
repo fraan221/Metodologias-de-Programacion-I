@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace practica_01_HerreraFranco
+﻿namespace practica_01_HerreraFranco
 {
     public class Aula
     {
@@ -14,16 +12,19 @@ namespace practica_01_HerreraFranco
 
         public void nuevoAlumno(Alumno alumno)
         {
-            Student studentAdaptado = new AlumnoAdapter(alumno);
-            this.teacher.goToClass(studentAdaptado);
+            if (this.teacher != null)
+            {
+                Student studentAdaptado = new AlumnoAdapter(alumno);
+                this.teacher.goToClass(studentAdaptado);
+            }
         }
 
         public void claseLista()
         {
-            if (this.teacher == null)
+            if (this.teacher != null)
             {
                 this.teacher.teachingAClass();
             }
-        } 
+        }
     }
 }

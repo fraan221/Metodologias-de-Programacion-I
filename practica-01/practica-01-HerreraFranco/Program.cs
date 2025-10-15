@@ -54,33 +54,52 @@ class Program
     static void Main(string[] args)
     {
         // EJERCICIO 2   
-        Teacher teacher = new Teacher();
-        GeneradorDeDatosAleatorios generador = new GeneradorDeDatosAleatorios();
+        //Teacher teacher = new Teacher();
+        //GeneradorDeDatosAleatorios generador = new GeneradorDeDatosAleatorios();
 
-        for (int i = 0; i < 10; i++)
-        {
-            Alumno alumno_base = new AlumnoProxy(generador.stringAleatorio(8), generador.numeroAleatorio(50000000), generador.numeroAleatorio(10000), generador.numeroAleatorio(10), false);
-            Alumno alumno_decorado = new DecoradorLegajo(alumno_base);
-            alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
-            alumno_decorado = new DecoradorAprobacion(alumno_decorado);
-            alumno_decorado = new DecoradorRecuadro(alumno_decorado);
-            Student student_final = new AlumnoAdapter(alumno_decorado);
-            teacher.goToClass(student_final);
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    Alumno alumno_base = new AlumnoProxy(generador.stringAleatorio(8), generador.numeroAleatorio(50000000), generador.numeroAleatorio(10000), generador.numeroAleatorio(10), false);
+        //    Alumno alumno_decorado = new DecoradorLegajo(alumno_base);
+        //    alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
+        //    alumno_decorado = new DecoradorAprobacion(alumno_decorado);
+        //    alumno_decorado = new DecoradorRecuadro(alumno_decorado);
+        //    Student student_final = new AlumnoAdapter(alumno_decorado);
+        //    teacher.goToClass(student_final);
+        //}
 
-        for (int i = 0; i < 10; i++)
-        {
-            Alumno alumno_base = new AlumnoProxy("Estudioso " + i, 40000000 + i, 10000 + i, 9.5, true);
-            Alumno alumno_decorado = new DecoradorLegajo(alumno_base);
-            alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
-            alumno_decorado = new DecoradorAprobacion(alumno_decorado);
-            alumno_decorado = new DecoradorRecuadro(alumno_decorado);
-            Student student_final = new AlumnoAdapter(alumno_decorado);
-            teacher.goToClass(student_final);
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    Alumno alumno_base = new AlumnoProxy("Estudioso " + i, 40000000 + i, 10000 + i, 9.5, true);
+        //    Alumno alumno_decorado = new DecoradorLegajo(alumno_base);
+        //    alumno_decorado = new DecoradorNotaLetras(alumno_decorado);
+        //    alumno_decorado = new DecoradorAprobacion(alumno_decorado);
+        //    alumno_decorado = new DecoradorRecuadro(alumno_decorado);
+        //    Student student_final = new AlumnoAdapter(alumno_decorado);
+        //    teacher.goToClass(student_final);
+        //}
 
-        teacher.teachingAClass();
+        //teacher.teachingAClass();
 
+        // EJERCICIO 10
+        Aula aula = new Aula();
+        Pila pila = new Pila();
+
+        OrdenEnAula1 ordenInicio = new OrdenInicio(aula);
+        OrdenEnAula2 ordenLlegaAlumno = new OrdenLlegaAlumno(aula);
+        OrdenEnAula1 ordenAulaLlena = new OrdenAulaLlena(aula);
+
+        pila.setOrdenInicio(ordenInicio);
+        pila.setOrdenLlegaAlumno(ordenLlegaAlumno);
+        pila.setOrdenAulaLlena(ordenAulaLlena);
+
+        FabricaDeAlumnos fabricaAlumnos = new FabricaDeAlumnos();
+        FabricaDeAlumnosEstudiosos fabricaEstudiosos = new FabricaDeAlumnosEstudiosos();
+
+        llenar(pila, fabricaAlumnos);
+        llenar(pila, fabricaEstudiosos);
+
+        Console.WriteLine("Elementos en la pila: " + pila.cuantos());
         Console.ReadKey(true);
     }
 }
