@@ -1,15 +1,29 @@
 ﻿namespace practica_01_HerreraFranco
 {
-    public class GeneradorDeDatosAleatorios
+    public class GeneradorDeDatosAleatorios : Manejador
     {
+        private static GeneradorDeDatosAleatorios instancia = null;
         private Random random = new Random();
 
-        public int numeroAleatorio(int max)
+        private GeneradorDeDatosAleatorios(Manejador s) : base(s)
+        {
+        }
+
+        public static GeneradorDeDatosAleatorios getInstance(Manejador s)
+        {
+            if (instancia == null)
+            {
+                instancia = new GeneradorDeDatosAleatorios(s);
+            }
+            return instancia;
+        }
+
+        public override int numeroAleatorio(int max)
         {
             return random.Next(0, max);
         }
 
-        public string stringAleatorio(int cant)
+        public override string stringAleatorio(int cant)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             char[] randomString = new char[cant];

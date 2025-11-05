@@ -8,7 +8,9 @@ namespace practica_01_HerreraFranco
 {
     public class FabricaDeAlumnosCompuestos : FabricaDeComparables
     {
-        private GeneradorDeDatosAleatorios generador = new GeneradorDeDatosAleatorios();
+        public FabricaDeAlumnosCompuestos(Manejador m) : base(m)
+        {
+        }
 
         public override IComparable crearAleatorio()
         {
@@ -16,7 +18,7 @@ namespace practica_01_HerreraFranco
             
             for (int i = 0; i < 5; i++)
             {
-                AlumnoProxy proxyHijo = new AlumnoProxy(generador.stringAleatorio(6), generador.numeroAleatorio(50000000), generador.numeroAleatorio(10000), generador.numeroAleatorio(10), false);
+                AlumnoProxy proxyHijo = new AlumnoProxy(manejador.stringAleatorio(6), manejador.numeroAleatorio(50000000), manejador.numeroAleatorio(10000), manejador.numeroAleatorio(10), false);
                 compuesto.agregarHijo(proxyHijo);
             }
 
@@ -26,6 +28,21 @@ namespace practica_01_HerreraFranco
         public override IComparable crearPorTeclado()
         {
             return this.crearAleatorio();
+        }
+
+        public override IComparable crearDesdeArchivo()
+        {
+            AlumnoCompuesto compuesto = new AlumnoCompuesto("Grupo Compuesto Archivo", 99, 99, 9);
+            FabricaDeComparables fabricaHijos = new FabricaDeAlumnos(this.manejador);
+
+            Console.WriteLine("Creando 5 hijos para el Alumno Compuesto desde archivo...");
+            for(int i = 0; i < 5; i++)
+            {
+                IComparable hijo = fabricaHijos.crearDesdeArchivo();
+                compuesto.agregarHijo((Alumno)hijo);
+                Console.WriteLine($"Hijo {i + 1} agregado: {hijo.ToString()}");
+            }
+            return compuesto;
         }
     }
 }

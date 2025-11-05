@@ -2,28 +2,38 @@
 {
     public class FabricaDeAlumnos : FabricaDeComparables
     {
-        private GeneradorDeDatosAleatorios generador = new GeneradorDeDatosAleatorios();
-        private LectorDeDatos lector = new LectorDeDatos();
+        public FabricaDeAlumnos(Manejador m) : base(m)
+        {
+        }
 
         public override IComparable crearAleatorio()
         {
-            string nombre = generador.stringAleatorio(10);
-            int dni = generador.numeroAleatorio(50000000);
-            int legajo = generador.numeroAleatorio(10000);
-            double promedio = generador.numeroAleatorio(10);
+            string nombre = manejador.stringAleatorio(10);
+            int dni = manejador.numeroAleatorio(50000000);
+            int legajo = manejador.numeroAleatorio(10000);
+            double promedio = manejador.numeroAleatorio(10);
             return new Alumno(nombre, dni, legajo, promedio);
         }
 
         public override IComparable crearPorTeclado()
         {
             Console.Write("Ingrese el nombre del alumno: ");
-            string nombre = lector.stringPorTeclado();
+            string nombre = manejador.stringPorTeclado();
             Console.Write("Ingrese el DNI del alumno: ");
-            int dni = lector.numeroPorTeclado();
+            int dni = manejador.numeroPorTeclado();
             Console.Write("Ingrese el legajo del alumno: ");
-            int legajo = lector.numeroPorTeclado();
+            int legajo = manejador.numeroPorTeclado();
             Console.Write("Ingrese el promedio del alumno: ");
-            double promedio = lector.numeroPorTeclado();
+            double promedio = manejador.numeroPorTeclado();
+            return new Alumno(nombre, dni, legajo, promedio);
+        }
+
+        public override IComparable crearDesdeArchivo()
+        {
+            string nombre = manejador.stringDesdeArchivo(20);
+            int dni = (int)manejador.numeroDesdeArchivo(50000000);
+            int legajo = (int)manejador.numeroDesdeArchivo(10000);
+            double promedio = manejador.numeroDesdeArchivo(10);
             return new Alumno(nombre, dni, legajo, promedio);
         }
     }

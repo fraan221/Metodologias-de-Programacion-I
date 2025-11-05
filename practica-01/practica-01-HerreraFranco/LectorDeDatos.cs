@@ -1,13 +1,17 @@
 ﻿namespace practica_01_HerreraFranco
 {
-    public class LectorDeDatos
+    public class LectorDeDatos : Manejador
     {
-        public int numeroPorTeclado()
+        public LectorDeDatos(Manejador s) : base(s)
+        {
+        }
+
+        public override int numeroPorTeclado()
         {
             return int.Parse(Console.ReadLine());
         }
 
-        public string stringPorTeclado()
+        public override string stringPorTeclado()
         {
             return Console.ReadLine();
         }
